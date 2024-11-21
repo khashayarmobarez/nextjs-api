@@ -31,7 +31,6 @@ export default function Home() {
       },
     });
     const data = await res.json();
-    console.log(data)
   };
 
   const deleteHandler = async () => {
@@ -39,7 +38,23 @@ export default function Home() {
       method: 'DELETE',
     });
     const data = await res.json();
+    setToDos(data.data)
+  };
+
+  const replaceAll = async () => {
+    const res = await fetch('/api/toDos', {
+      method: 'PUT',
+      body: JSON.stringify([
+        {id:7 , title: 'todo 7'},
+        {id:8 , title: 'todo 8'},
+      ]),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    const data = await res.json();
     console.log(data);
+    setToDos(data.data)
   };
 
 
@@ -56,6 +71,9 @@ export default function Home() {
       </div>
       <div >
         <button onClick={deleteHandler}>delete all</button>
+      </div>
+      <div>
+        <button onClick={replaceAll}>replace all</button>
       </div>
     </div>
   );

@@ -21,5 +21,10 @@ export default function handler (req,res) {
             message: 'delete successfuly',
             data: []
         })
+    } else if( req.method === 'PUT') {
+        res.status(200).json({
+            message: 'replace successfuly',
+            data: req.body
+        })
     }
 }
