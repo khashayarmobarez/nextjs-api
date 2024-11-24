@@ -6,6 +6,8 @@ export default function Home() {
 
   const [toDos, setToDos ] = useState([])
   const [addToDo, setAddToDo] = useState('')
+  const [id, setId] = useState('')
+  const [title, setTitle] = useState('')
 
   useEffect(() => {
     async function fetchData() {
@@ -58,6 +60,19 @@ export default function Home() {
   };
 
 
+  const updateHandler = async () => {
+    const res = await fetch(`/api/toDos/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ title }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    const data = await res.json();
+    console.log(data);
+  }
+
+
   return (
     <div className="w-full flex flex-col min-h-[100dvh]">
       <ul>
@@ -74,6 +89,11 @@ export default function Home() {
       </div>
       <div>
         <button onClick={replaceAll}>replace all</button>
+      </div>
+      <div>
+        <input value={id} onChange={(e) => setId(e.target.value)} placeholder="to do id" />
+        <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="to do title" />
+        <button onClick={updateHandler} >update</button>
       </div>
     </div>
   );
